@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from notion_client import Client
 
 app = Flask(__name__)
@@ -6,11 +6,14 @@ app = Flask(__name__)
 # Inicializar o cliente do Notion com o token fornecido
 notion = Client(auth="ntn_L9886682044bgWRgx2ZwktT5fd0LLH6sKarImTF9sO1eYu")
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
+    if request.method == 'POST':
+        # Resposta padrão para requisições POST
+        return jsonify({"message": "Bot está online!"})
     return "Bem-vindo ao Bot Poe!"
 
-@app.route('/notion-page')
+@app.route('/notion-page', methods=['GET', 'POST'])
 def notion_page():
     # Extrair o page_id do link fornecido
     page_id = "1bc24d4acbbc8090a3a8e9bf10279463"
