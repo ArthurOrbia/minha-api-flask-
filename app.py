@@ -15,10 +15,14 @@ def home():
 
 @app.route('/notion-page', methods=['GET', 'POST'])
 def notion_page():
-    # Extrair o page_id do link fornecido
-    page_id = "1bc24d4acbbc8090a3a8e9bf10279463"
-    page = notion.pages.retrieve(page_id)
-    return jsonify(page)
+    try:
+        # Extrair o page_id do link fornecido
+        page_id = "1bc24d4acbbc8090a3a8e9bf10279463"
+        page = notion.pages.retrieve(page_id)
+        return jsonify(page)
+    except Exception as e:
+        # Retornar uma mensagem de erro em caso de falha
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000, debug=True)
